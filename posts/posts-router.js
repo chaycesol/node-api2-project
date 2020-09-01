@@ -115,8 +115,29 @@ router.post('/:id/comments', (req, res) =>{
 /** PUT REQUESTS **/
 // Updates the post with the specified id using data from the request body. Returns the modified document, NOT the original.
 router.put('/:id', (req, res) => {
-    res.status(200).json({endpoint: "PUT /api/posts/:id"})
+    try {
+        const id = req.params.id;
+    
+        if (id) {
+          if (req.body.title && req.body.contents) {
+            Posts.update(id, req.body)
+              .then((updatedPost) => {
+                res.status(200).json(updatedPost);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          } else {
+            res.status(400).json({ error: 'Please provide title and contents for the post.' });
+          }
+        } else { 
+            res.status(404).json({error: 'The post with the specified ID does not exist.' });
+        }
+      } catch {
+        res.status(500).json({ error: 'The post information could not be modified.' });
+      }
 });
+
 
 /** DELETE REQUESTS **/
 router.delete('/:id', (req, res) =>{
