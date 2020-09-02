@@ -65,7 +65,7 @@ router.get('/:id/comments', (req, res) => {
 //Creates a post using the information sent inside the request body.
 router.post('/', (req, res) => {
     try {
-        if(req.body.title ** req.body.contents) {
+        if(req.body.title || req.body.contents) {
             Posts.insert(req.body)
             .then((post) => res.status(201).json(post))
             .catch((err) => console.log(error));

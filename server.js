@@ -9,7 +9,7 @@ const postsRouter = require('./posts/posts-router.js');
 const server = express();
 
 // define port used
-const port = 8000;
+const port = 5000;
 
 //json stringyfier
 server.use(express.json());
